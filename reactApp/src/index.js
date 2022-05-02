@@ -8,6 +8,7 @@ import AuthProvider from "./authContext";
 import AuthHeader from "./authHeader";
 import ProtectedRoutes from "./protectedRoutes";
 import SignUpPage from "./signUpPage";
+import MovieProvider from "./moviesContext";
 
 const App = () => {
   return (
@@ -28,7 +29,8 @@ const App = () => {
             <Link to="/profile">Profile</Link>
           </li>
         </ul>
-        <Routes>
+        <MovieProvider>
+      <Routes>
           <Route path="/public" element={ <PublicPage /> } />
           <Route path="/" element={ <HomePage /> } />
           <Route path="/login" element={ <LoginPage /> } />
@@ -39,7 +41,9 @@ const App = () => {
           </Route>
 
           <Route path="*" element={ <Navigate to="/" /> } />
-        </Routes>
+          </Routes>
+    </MovieProvider>
+        
       </AuthProvider>
     </BrowserRouter>
   );
