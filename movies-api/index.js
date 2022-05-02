@@ -5,7 +5,8 @@ import './db';
 import './seedData';
 import usersRouter from './api/users';
 import session from 'express-session';
-import authenticate from './authenticate';
+// replace existing authenticate import with passport strategy​
+import passport from './authenticate';
 
 
 
@@ -27,17 +28,14 @@ const port = process.env.PORT;
 
 app.use(express.json());
 //session middleware
-app.use(session({
-  secret: 'ilikecake',
-  resave: true,
-  saveUninitialized: true
-}));
+app.use(passport.initialize());
+
 
 app.use('/api/users', usersRouter);
 
 app.use('/api/movies', moviesRouter);
 //update /api/Movie route
-app.use('/api/movies', authenticate, moviesRouter);
+app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use(errHandler);
 
 app.listen(port, () => {
